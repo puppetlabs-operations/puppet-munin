@@ -27,6 +27,8 @@ class munin(
   $plugins_source     = $munin::params::plugins_source,
   $plugins_path       = $munin::params::plugins_path,
   $confdir            = $munin::params::confdir,
+  $export             = true,
+  $export_conf_dir    = "/etc/munin/munin-conf.d",
 ) inherits munin::params {
 
   package { $base_packages:
@@ -37,6 +39,7 @@ class munin(
     package { $extra_packages: ensure => installed; }
   }
 
+  # Write the node configuration
   file { $node_config:
     content => template('munin/munin-node.conf.erb'),
     ensure  => present,
@@ -44,20 +47,21 @@ class munin(
     require => Package[$base_packages],
   }
 
+  # Create the plugin configuration
   file { $plugins_conf:
     content => template('munin/munin-plugins.conf.erb'),
     ensure  => present,
     notify  => Service[$node_service],
     require => Package[$base_packages]
   }
+
   file { "${plugins_conf}.sample": ensure => absent }
 
-  # Bold move, manage the plugindest dir, where the symlinks live, and
-  # remove the ones we don't want, a la #12701
+  # Purge plugins we are not managing
   file { $plugins_dest:
     ensure  => directory,
     owner   => 'root',
-    group   => $kernel ? { 'freebsd' => 'wheel', default   => 'root', },
+    group   => $group,
     mode    => '0755',
     recurse => true,
     purge   => true,
@@ -65,17 +69,18 @@ class munin(
     require => Package[$base_packages],
   }
 
-  # Yes, this is somewhat dirty, but there isn't a Puppet function
-  # directly for getting the directory name.
+  # Get the directory names
   $logdir = inline_template( "<%= File.dirname( log_file ) %>" )
   $piddir = inline_template( "<%= File.dirname( pid_file ) %>" )
 
+  # Create the directories
   file { $logdir:
     ensure  => directory,
     owner   => 'munin',
     mode    => '0750',
     require => Package[$base_packages]
   }
+
   file { $piddir:
     ensure  => directory,
     owner   => 'munin',
@@ -109,9 +114,12 @@ class munin(
     ],
   }
 
-  @@file { "/etc/munin/munin-conf.d/${fqdn}":
-    content => template('munin/munin-host.conf.erb'),
-    ensure  => present,
-    tag     => 'munin_host',
+  # Export the node resource to the master
+  if $export {
+    @@file { "${export_conf_dir}/${fqdn}":
+      content => template('munin/munin-host.conf.erb'),
+      ensure  => present,
+      tag     => 'munin_host',
+    }
   }
 }
