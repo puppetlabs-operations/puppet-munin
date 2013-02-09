@@ -29,29 +29,29 @@ class munin::params {
     }
     'freebsd': {
       $confdir         = '/usr/local/etc/munin'
+      $log_file        = '/var/log/munin/munin-node.log'
+      $pid_file        = '/var/run/munin/munin-node.pid'
+      $group           = 'wheel'
       $base_packages   = 'sysutils/munin-node'
       $extra_packages  = undef
       $server_packages = 'sysutils/munin-master'
       $plugins_source  = '/usr/local/share/munin/plugins'
       $plugins_dest    = '/usr/local/etc/munin/plugins'
       $plugins_conf    = '/usr/local/etc/munin/plugin-conf.d/plugins.conf'
-      $group           = 'wheel'
-      $log_file        = '/var/log/munin/munin-node.log'
-      $pid_file        = '/var/run/munin/munin-node.pid'
       $node_service    = 'munin-node'
       $node_config     = '/usr/local/etc/munin/munin-node.conf'
       $postfixlog      = 'maillog'
     }
     'Solaris': {
       $confdir        = '/etc/opt/csw/munin'
+      $log_file       = '/var/opt/csw/munin/log/munin-node.log'
+      $pid_file       = '/var/opt/csw/munin/run/munin-node.pid'
+      $group          = 'root'
       $base_packages  = 'CSWmunin-node'
       $extra_packages = undef
       $plugins_source = '/opt/csw/libexec/munin/plugins/'
       $plugins_dest   = '/etc/opt/csw/munin/plugins'
       $plugins_conf   = '/etc/opt/csw/munin/plugin-conf.d/plugins.conf'
-      $group          = 'root'
-      $log_file       = '/var/opt/csw/munin/log/munin-node.log'
-      $pid_file       = '/var/opt/csw/munin/run/munin-node.pid'
       $node_service   = 'cswmuninnode'
       $node_config    = '/etc/opt/csw/munin/munin-node.conf'
       $postfixlog     = 'mail.log'
