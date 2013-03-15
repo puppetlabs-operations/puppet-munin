@@ -16,6 +16,7 @@ class munin::server(
   $confdir         = $munin::params::confdir,
 ) inherits munin::params {
 
+  include motd
   motd::register{ "Munin server": }
 
   package { $server_packages:
