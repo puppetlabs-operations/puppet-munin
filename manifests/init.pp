@@ -26,6 +26,7 @@ class munin(
   $plugins_dest       = $munin::params::plugins_dest,
   $plugins_source     = $munin::params::plugins_source,
   $plugins_path       = $munin::params::plugins_path,
+  $plugins_purge      = true,
   $confdir            = $munin::params::confdir,
   $export             = true,
   $export_conf_dir    = "/etc/munin/munin-conf.d",
@@ -64,7 +65,7 @@ class munin(
     group   => $group,
     mode    => '0755',
     recurse => true,
-    purge   => true,
+    purge   => $plugins_purge,
     notify  => Service[$node_service],
     require => Package[$base_packages],
   }
@@ -116,10 +117,8 @@ class munin(
 
   # Export the node resource to the master
   if $export {
-    @@file { "${export_conf_dir}/${fqdn}":
-      content => template('munin/munin-host.conf.erb'),
-      ensure  => present,
-      tag     => 'munin_host',
+    @@munin::host { $fqdn:
+      address => $munin_node_address,
     }
   }
 }
