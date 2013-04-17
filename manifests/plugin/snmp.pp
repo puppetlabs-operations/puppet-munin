@@ -2,10 +2,18 @@
 # $name   == the name of the plugin ( snmp__uptime )
 
 define munin::plugin::snmp (
+  $device = undef,
   $plugin,
 ){
-  $device      = $name
-  $destination = regsubst($plugin, '__', "_${device}_")
+
+  if $device == undef {
+    $devicename = $name
+  } else {
+    $devicename = $device
+  }
+
+  $devicename  = $name
+  $destination = regsubst($plugin, '__', "_${devicename}_")
 
   munin::plugin { $destination:
     fromname => $plugin
