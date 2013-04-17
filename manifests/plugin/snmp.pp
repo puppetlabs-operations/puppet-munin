@@ -5,7 +5,7 @@ define munin::plugin::snmp (
   $plugin,
 ){
   $devicename  = $name
-  $destination = regsubst($plugin, '__', "_${devicename}_")
+  $destination = regsubst(split($plugin,','), '__', "_${devicename}_")
 
   munin::plugin { $destination:
     fromname => $plugin
