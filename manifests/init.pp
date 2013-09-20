@@ -15,6 +15,7 @@ class munin(
   $munin_server,
   $extra_allows       = false,
   $munin_node_address = $ipaddress,
+  $listen_address     = '*',
   $log_file           = $munin::params::log_file,
   $pid_file           = $munin::params::pid_file,
   $group              = $munin::params::group,
