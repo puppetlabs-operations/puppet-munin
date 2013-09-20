@@ -52,7 +52,7 @@ allow <%= "^#{e}$".gsub(/\./, '\.') %>
 # cidr_deny  192.0.2.42/32
 
 # Which address to bind to;
-host <%= munin_listen_address %>
+host <%= listen_address %>
 # host 127.0.0.1
 
 # And which port
