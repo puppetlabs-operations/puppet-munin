@@ -3,14 +3,14 @@
 #
 
 log_level 4
-log_file <%= log_file %>
-pid_file <%= pid_file %>
+log_file <%= @log_file %>
+pid_file <%= @pid_file %>
 
 background 1
 setsid 1
 
 user root
-group <%= group %>
+group <%= @group %>
 
 # Regexps for files to ignore
 
@@ -26,7 +26,7 @@ ignore_file \.pod$
 # Set this if the client doesn't report the correct hostname when
 # telnetting to localhost, port 4949
 #
-host_name <%= fqdn %>
+host_name <%= @fqdn %>
 
 # A list of addresses that are allowed to connect.  This must be a
 # regular expression, since Net::Server does not understand CIDR-style
@@ -34,11 +34,11 @@ host_name <%= fqdn %>
 # may repeat the allow line as many times as you'd like
 
 <%# Escape IP address for munin -%>
-<% if munin_server -%>
-allow <%= "^#{munin_server}$".gsub(/\./, '\.') %>
-<% end -%>
-<% if extra_allows -%><% extra_allows.to_a.each do |e| -%>
-allow <%= "^#{e}$".gsub(/\./, '\.') %>
+<% if @allow.is_a? String -%>
+allow <%= "^#{@allow}$".gsub(/\./, '\.') %>
+<% elsif @allow.is_a? Array -%>
+<% allow.each do |a| -%>
+allow <%= "^#{a}$".gsub(/\./, '\.') %>
 <% end -%>
 <% end -%>
 
@@ -52,7 +52,7 @@ allow <%= "^#{e}$".gsub(/\./, '\.') %>
 # cidr_deny  192.0.2.42/32
 
 # Which address to bind to;
-host <%= munin_listen_address %>
+host <%= @listen %>
 # host 127.0.0.1
 
 # And which port
