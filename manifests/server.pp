@@ -32,14 +32,6 @@ class munin::server(
     content => template("munin/munin.conf.erb"),
   }
 
-  # manage the sub-configuration directory
-  file { "${confdir}/munin-conf.d":
-    ensure  => directory,
-    owner   => root,
-    group   => 0,
-    mode    => 644,
-  }
-
   # realize all munin host declarations
   File <<| tag == 'munin_host' |>>
 }
