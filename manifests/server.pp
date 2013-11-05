@@ -15,7 +15,10 @@ class munin::server(
   $server_packages = $munin::params::server_packages,
   $confdir         = $munin::params::confdir,
   $max_graph_jobs  = $processorcount,
+  $realize         = true,
 ) inherits munin::params {
+
+  $host_conf_d = "${confdir}/munin-conf.d"
 
   include motd
   motd::register{ "Munin server": }
@@ -32,6 +35,10 @@ class munin::server(
     content => template("munin/munin.conf.erb"),
   }
 
-  # realize all munin host declarations
-  File <<| tag == 'munin_host' |>>
+  if $realize {
+    Munin::Host <<||>> {
+      conf_d => $host_conf_d,
+    }
+  }
+
 }

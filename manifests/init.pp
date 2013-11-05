@@ -28,7 +28,6 @@ class munin(
   $plugins_path    = $munin::params::plugins_path,
   $confdir         = $munin::params::confdir,
   $export          = true,
-  $export_conf_dir = "/etc/munin/munin-conf.d",
 ) inherits munin::params {
 
   package { $base_packages:
@@ -116,10 +115,8 @@ class munin(
 
   # Export the node resource to the master
   if $export {
-    @@file { "${export_conf_dir}/${fqdn}":
-      content => template('munin/munin-host.conf.erb'),
-      ensure  => present,
-      tag     => 'munin_host',
+    @@munin::host { $fqdn:
+      node_address => $node_address
     }
   }
 }
