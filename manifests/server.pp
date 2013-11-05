@@ -20,9 +20,6 @@ class munin::server(
 
   $host_conf_d = "${confdir}/munin-conf.d"
 
-  include motd
-  motd::register{ "Munin server": }
-
   package { $server_packages:
     ensure => present,
   }
