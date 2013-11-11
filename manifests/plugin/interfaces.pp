@@ -19,12 +19,12 @@ define munin::plugin::interfaces (
     fail('You must declare the munin class before using this defined resource type')
   }
 
-  # Have to use double backslash due to being a double quoted string,
-  # so it pulls in the variable, but then it intrepts escape sequences
-  # too.
-  #
-  # regsubst also, helpfully, takes in an array, and spits it back out
-  # too. So we can just act on each!
+  # Have to use double backslash due to being a double quoted string, so it
+  # pulls in the variable, but then it interprets escape sequences too.
+
+  # regsubst also, helpfully, takes in an array, and spits it back out too. So
+  # we can just act on each!
+
   $array_of_plugins = regsubst( split( $array_of_interfaces , ',' ) , '^(.*)', "${plugin_name}\\1" , 'G' )
 
   munin::plugin { $array_of_plugins:
