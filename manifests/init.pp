@@ -26,6 +26,7 @@ class munin(
   $plugins_dest    = $munin::params::plugins_dest,
   $plugins_source  = $munin::params::plugins_source,
   $plugins_path    = $munin::params::plugins_path,
+  $plugins_purge   = true,
   $confdir         = $munin::params::confdir,
   $export          = true,
 ) inherits munin::params {
@@ -63,7 +64,7 @@ class munin(
     group   => $group,
     mode    => '0755',
     recurse => true,
-    purge   => true,
+    purge   => $plugins_purge,
     notify  => Service[$node_service],
     require => Package[$base_packages],
   }
