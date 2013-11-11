@@ -1,7 +1,8 @@
 define munin::host (
-  $ensure       = present,
-  $node_address = $ipaddress,
-  $conf_d       = '/etc/munin/munin-conf.d',
+  $ensure        = present,
+  $node_address  = $ipaddress,
+  $use_node_name = 'yes', # 'yes' or 'no'
+  $conf_d        = '/etc/munin/munin-conf.d',
 ){
 
   file { "Munin configuration for ${name}":
