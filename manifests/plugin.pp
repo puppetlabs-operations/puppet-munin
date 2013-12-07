@@ -19,7 +19,7 @@ define munin::plugin (
 ) {
 
   if ! defined('::munin') {
-    fail('You must declare the munin class before using this defined resource type')
+    fail('Class[munin] needs to be included before plugins can be managed')
   }
 
   if $fromname == undef {
@@ -31,10 +31,10 @@ define munin::plugin (
   $realensure = $ensure ? {
     present   => link,
     link      => link,
-    "present" => link,
-    "link"    => link,
+    'present' => link,
+    'link'    => link,
     absent    => absent,
-    "absent"  => absent,
+    'absent'  => absent,
   }
 
   file { "${plugindest}/${name}":

@@ -12,7 +12,7 @@ define munin::plugin::install(
 ) {
 
   if ! defined('::munin') {
-    fail('You must declare the munin class before using this defined resource type')
+    fail('Class[munin] needs to be included before plugins can be installed')
   }
 
   # have to do this, incase $name isn't available at define time.
@@ -32,5 +32,4 @@ define munin::plugin::install(
     source  => $pluginsource,
     require => Package[$munin::base_packages],
   }
-
 }

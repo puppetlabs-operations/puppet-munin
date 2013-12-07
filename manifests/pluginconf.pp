@@ -6,11 +6,11 @@ define munin::pluginconf(
 ) {
 
   if ! defined('::munin') {
-    fail('You must declare the munin class before using this defined resource type')
+    fail('Class[munin] needs to be included before plugins can be managed')
   }
 
   file { "${munin::confdir}/plugin-conf.d/${name}":
-    content => template("munin/plugin.conf.erb"),
+    content => template('munin/plugin.conf.erb'),
     notify  => Service[$munin::node_service],
     require => Package[$munin::base_packages],
   }

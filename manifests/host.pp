@@ -1,3 +1,8 @@
+# Class: munin::host
+#
+# Creates a munin host configuration file for the poller to use.  Useful for
+# exporting from a host, or creating a static list of hosts to poll for stats.
+#
 define munin::host (
   $ensure        = present,
   $node_address  = $ipaddress,

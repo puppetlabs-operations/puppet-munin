@@ -12,7 +12,7 @@
 #
 class munin::params {
 
-  case $osfamily {
+  case $::osfamily {
     'darwin': {
       $confdir        = '/opt/local/etc/munin'
       $base_packages  = 'munin'

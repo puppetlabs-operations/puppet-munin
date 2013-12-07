@@ -41,16 +41,16 @@ class munin(
 
   # Write the node configuration
   file { $node_config:
-    content => template('munin/munin-node.conf.erb'),
     ensure  => present,
+    content => template('munin/munin-node.conf.erb'),
     notify  => Service[$node_service],
     require => Package[$base_packages],
   }
 
   # Create the plugin configuration
   file { $plugins_conf:
-    content => template('munin/munin-plugins.conf.erb'),
     ensure  => present,
+    content => template('munin/munin-plugins.conf.erb'),
     notify  => Service[$node_service],
     require => Package[$base_packages]
   }
@@ -70,8 +70,8 @@ class munin(
   }
 
   # Get the directory names
-  $logdir = inline_template( "<%= File.dirname( log_file ) %>" )
-  $piddir = inline_template( "<%= File.dirname( pid_file ) %>" )
+  $logdir = inline_template( '<%= File.dirname( @log_file ) %>' )
+  $piddir = inline_template( '<%= File.dirname( @pid_file ) %>' )
 
   # Create the directories
   file { $logdir:
@@ -93,7 +93,7 @@ class munin(
   # "just work" without having to fix things in munin. See the vile
   # use of "$MUNIN_PLUGSTSTE" and the likes. (Some are even more
   # obscured in the CPAN libraries.
-  if $kernel == "FreeBSD" {
+  if $::kernel == 'FreeBSD' {
     file { '/var/munin/plugin-state':
       ensure  => symlink,
       target  => $piddir,
@@ -116,7 +116,7 @@ class munin(
 
   # Export the node resource to the master
   if $export {
-    @@munin::host { $fqdn:
+    @@munin::host { $::fqdn:
       node_address => $node_address
     }
   }
