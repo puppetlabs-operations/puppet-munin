@@ -37,7 +37,7 @@ host_name <%= @fqdn %>
 <% if @allow.is_a? String -%>
 allow <%= "^#{@allow}$".gsub(/\./, '\.') %>
 <% elsif @allow.is_a? Array -%>
-<% allow.each do |a| -%>
+<% @allow.each do |a| -%>
 allow <%= "^#{a}$".gsub(/\./, '\.') %>
 <% end -%>
 <% end -%>

@@ -16,7 +16,7 @@ define munin::plugin::interfaces (
 ) {
 
   if ! defined('::munin') {
-    fail('You must declare the munin class before using this defined resource type')
+    fail('Class[munin] needs to be included before plugins can be installed')
   }
 
   # Have to use double backslash due to being a double quoted string, so it

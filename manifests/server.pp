@@ -27,19 +27,19 @@ class munin::server(
 
   file { $host_conf_d:
     ensure  => directory,
-    owner   => root,
-    group   => 0,
-    mode    => 0755,
+    owner   => 'root',
+    group   => '0',
+    mode    => '0755',
     recurse => true,
     purge   => $purge_conf,
   }
 
   # manage the munin.conf server configuration
   file { "${confdir}/munin.conf":
-    owner   => root,
-    group   => 0,
-    mode    => 644,
-    content => template("munin/munin.conf.erb"),
+    owner   => 'root',
+    group   => '0',
+    mode    => '0644',
+    content => template('munin/munin.conf.erb'),
   }
 
   if $realize {
