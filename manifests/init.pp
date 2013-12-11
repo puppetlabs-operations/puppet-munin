@@ -17,6 +17,7 @@ class munin(
   $listen          = '*',
   $log_file        = $munin::params::log_file,
   $pid_file        = $munin::params::pid_file,
+  $owner           = $munin::params::owner,
   $group           = $munin::params::group,
   $base_packages   = $munin::params::base_packages,
   $extra_packages  = $munin::params::extra_packages,
@@ -76,14 +77,14 @@ class munin(
   # Create the directories
   file { $logdir:
     ensure  => directory,
-    owner   => 'munin',
+    owner   => $owner,
     mode    => '0750',
     require => Package[$base_packages]
   }
 
   file { $piddir:
     ensure  => directory,
-    owner   => 'munin',
+    owner   => $owner,
     group   => $group,
     mode    => '0770',
     require => Package[$base_packages];

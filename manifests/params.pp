@@ -20,6 +20,7 @@ class munin::params {
       $plugins_source = '/opt/local/usr/share/munin/plugins'
       $plugins_dest   = '/opt/local/etc/munin/plugins'
       $plugins_conf   = '/opt/local/etc/munin/plugin-conf.d/plugins.conf'
+      $owner          = 'munin'
       $group          = 'wheel'
       $log_file       = '/opt/local/var/log/munin/munin-node.log'
       $pid_file       = '/opt/local/var/run/munin/munin-node.pid'
@@ -31,6 +32,7 @@ class munin::params {
       $confdir         = '/usr/local/etc/munin'
       $log_file        = '/var/log/munin/munin-node.log'
       $pid_file        = '/var/run/munin/munin-node.pid'
+      $owner          = 'munin'
       $group           = 'wheel'
       $base_packages   = 'sysutils/munin-node'
       $extra_packages  = undef
@@ -46,6 +48,7 @@ class munin::params {
       $confdir        = '/etc/opt/csw/munin'
       $log_file       = '/var/opt/csw/munin/log/munin-node.log'
       $pid_file       = '/var/opt/csw/munin/run/munin-node.pid'
+      $owner          = 'munin'
       $group          = 'root'
       $base_packages  = 'CSWmunin-node'
       $extra_packages = undef
@@ -60,6 +63,7 @@ class munin::params {
       $confdir         = '/etc/munin'
       $log_file        = '/var/log/munin/munin-node.log'
       $pid_file        = '/var/run/munin/munin-node.pid'
+      $owner           = 'munin'
       $group           = 'root'
       $base_packages   = 'munin-node'
       $extra_packages  = 'munin-plugins-extra'
@@ -71,10 +75,25 @@ class munin::params {
       $node_config     = '/etc/munin/munin-node.conf'
       $postfixlog      = 'mail.log'
     }
+    'openbsd': {
+      $confdir        = '/etc/munin'
+      $log_file       = '/var/log/munin/munin-node.log'
+      $pid_file       = '/var/run/munin/munin-node.pid'
+      $owner          = '_munin'
+      $group          = 'wheel'
+      $base_packages  = 'munin-node'
+      $plugins_source = '/usr/local/libexec/munin/plugins/'
+      $plugins_dest   = '/etc/munin/plugins'
+      $plugins_conf   = '/etc/munin/plugin-conf.d/plugins.conf'
+      $node_service   = 'munin_node'
+      $node_config    = '/etc/munin/munin-node.conf'
+      $postfixlog     = 'mail.log'
+    }
     default: {
       $confdir        = '/etc/munin'
       $log_file       = '/var/log/munin/munin-node.log'
       $pid_file       = '/var/run/munin/munin-node.pid'
+      $owner          = 'munin'
       $group          = 'root'
       $base_packages  = 'munin-node'
       $plugins_source = '/usr/share/munin/plugins'
