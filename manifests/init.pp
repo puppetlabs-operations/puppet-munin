@@ -15,6 +15,7 @@ class munin(
   $allow           = ['127.0.0.1'],
   $node_address    = $ipaddress,
   $listen          = '*',
+  $port            = '4949',
   $log_file        = $munin::params::log_file,
   $pid_file        = $munin::params::pid_file,
   $owner           = $munin::params::owner,
